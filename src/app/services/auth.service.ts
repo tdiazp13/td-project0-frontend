@@ -38,14 +38,19 @@ export class AuthService {
   };
 
   login = async (loginInfo: ILoginFormInfo): Promise<{ token: string }> => {
-    const { token } = await (await fetch('http://localhost:8097/api/api-auth', {
+    const f = await fetch('http://localhost:8097/api/api-auth', {
       method: 'post',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: (new URLSearchParams({...loginInfo})).toString()
-    })).json();
-    localStorage.setItem('user', JSON.stringify({ token, email: loginInfo.email }));
-    return { token };
+    });
+    if ( f.ok ) {
+      const { token } = await f.json();
+      localStorage.setItem('user', JSON.stringify({ token, email: loginInfo.email }));
+      return { token };
+    }else{
+      return Promise.reject(await f.json());
+    }
   }
 }
