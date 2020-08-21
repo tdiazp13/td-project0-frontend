@@ -15,6 +15,7 @@ export class EventDetailComponent implements OnInit {
   types: IEventTypeDef[];
   categories: IEventCategoryDef[];
   showModal: boolean;
+  loading = false;
 
   constructor(
     private events: EventService,
@@ -25,11 +26,13 @@ export class EventDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       const uuid = this.aRoute.snapshot.paramMap.get('uuid');
-      const [event, types, categories] = await Promise.all([
-        this.events.getById(uuid),
-        this.events.types(),
-        this.events.categories()
-      ]);
+      const event = await this.events.getById(uuid);
+      const types = await this.events.types();
+      const categories = await this.events.categories();
+      (event as any).event_initial_time = event.event_initial_date.split('T')[1].slice(0, 5);
+      (event as any).event_initial_date = event.event_initial_date.split('T')[0];
+      (event as any).event_final_time = event.event_final_date.split('T')[1].slice(0, 5);
+      (event as any).event_final_date = event.event_final_date.split('T')[0];
       this.currentEvent = event;
       this.types = types;
       this.categories = categories;
@@ -40,10 +43,18 @@ export class EventDetailComponent implements OnInit {
 
   onSubmit = async (form: NgForm): Promise<void> => {
     try {
-      await this.events.update({ id: this.currentEvent.id, ...form.value });
+      this.loading = true;
+      const f = form.value;
+      f.event_final_date = `${f.event_final_date}T${f.event_final_time}`;
+      f.event_initial_date = `${f.event_initial_date}T${f.event_initial_time}`;
+      delete f.event_final_time;
+      delete f.event_initial_time;
+      await this.events.update({ id: this.currentEvent.id, ...f });
       await this.route.navigate(['/dashboard']);
     } catch (error) {
       this.showModal = true;
+    } finally {
+      this.loading = false;
     }
   }
 
@@ -53,6 +64,8 @@ export class EventDetailComponent implements OnInit {
       await this.route.navigate(['/dashboard']);
     } catch (error) {
       this.showModal = true;
+    } finally {
+      this.loading = false;
     }
   }
 

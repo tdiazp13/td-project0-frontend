@@ -13,21 +13,22 @@ export class DashboardComponent implements OnInit {
 
   showingEvents: IEventDef[];
   showModal: boolean;
+  loading = true;
 
   constructor(private events: EventService, private router: Router, private auth: AuthService) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      const [allEvents, types, categories] = await Promise.all([
-        this.events.getAll(),
-        this.events.types(),
-        this.events.categories()
-      ]);
+      const allEvents = await this.events.getAll();
+      const types = await this.events.types();
+      const categories = await this.events.categories();
       this.associateFields(allEvents, 'event_type', types);
       this.associateFields(allEvents, 'event_category', categories);
       this.showingEvents = allEvents;
     } catch (error) {
       this.showModal = true;
+    } finally {
+      this.loading = false;
     }
   }
 

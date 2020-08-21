@@ -22,18 +22,31 @@
               </label>
                 <label>
                 <span>Initial Date:</span>
-                <input type="datetime-local" 
-                    [ngModel]="eventInitialDate | date:'yyyy-MM-ddTHH:mm'"
-                    (ngModelChange)="eventInitialDate = $event; eventFinalDate=''"
-                    name="event_initial_date" required>
+                <div class="group">
+                  <input type="date" 
+                      [ngModel]="eventInitialDate"
+                      (ngModelChange)="eventInitialDate = $event; eventFinalDate=''"
+                      name="event_initial_date" required>
+                    <input type="time"
+                      [ngModel]="eventInitialTime"
+                      (ngModelChange)="eventInitialTime = $event; eventFinalTime=''"
+                      name="event_initial_time" required>
+                </div>
               </label>
                 <label>
                 <span>Final Date:</span>
-                <input type="datetime-local" 
-                    [ngModel]="eventFinalDate | date:'yyyy-MM-ddTHH:mm'"
-                    (ngModelChange)="eventFinalDate = $event"
-                    [min]="eventInitialDate"
-                    name="event_final_date" required>
+                <div class="group">
+                  <input type="date" 
+                      [ngModel]="eventFinalDate"
+                      (ngModelChange)="eventFinalDate = $event"
+                      [min]="eventInitialDate"
+                      name="event_final_date" required>
+                  <input type="time" 
+                      [ngModel]="eventFinalTime"
+                      (ngModelChange)="eventFinalTime = $event"
+                      [min]="eventInitialTime"
+                      name="event_final_time" required>
+                </div>
               </label>
                 <label>
                   <span>Type:</span>
@@ -48,4 +61,5 @@
         </form>
     </div>
 </div>
+<app-c-loader *ngIf="loading"></app-c-loader>
 <app-error-modal *ngIf="showModal" (closeEvent)="showModal=false"></app-error-modal>

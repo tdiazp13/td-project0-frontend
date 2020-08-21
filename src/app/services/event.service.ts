@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
 import { IEventDef, IEventTypeDef, IEventCategoryDef } from '../models/event.model';
-import {AuthService} from "./auth.service";
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  cachedTypes: IEventTypeDef[];
-  cachedCategories: IEventCategoryDef[];
+  constructor(private auth: AuthService) { }
 
-  constructor( private auth: AuthService ) { }
-
-  private generateTokenHeader = () => ({ headers: { Authorization: `Token ${this.auth.token}`}});
+  private generateTokenHeader = () => ({ headers: { Authorization: `Token ${this.auth.token}` } });
 
   getAll = async (): Promise<IEventDef[]> =>
     (await fetch('http://localhost:8097/api/events/', this.generateTokenHeader())).json();
@@ -40,19 +37,21 @@ export class EventService {
     (await fetch(`http://localhost:8097/api/events/${uuid}`, { method: 'delete', ...this.generateTokenHeader() })).json();
 
   types = async (): Promise<IEventTypeDef[]> => {
-    if (this.cachedTypes) {
-      return this.cachedTypes;
+    if (localStorage.getItem('types')) {
+      return JSON.parse(localStorage.getItem('types'));
     }
-    this.cachedTypes = await (await fetch('http://localhost:8097/api/event/types', this.generateTokenHeader())).json()
-    return this.cachedTypes;
+    const t = await (await fetch('http://localhost:8097/api/event/types', this.generateTokenHeader())).json();
+    localStorage.setItem('types', JSON.stringify(t));
+    return t;
   }
 
-  categories = async (): Promise<IEventCategoryDef[]> =>{
-    if(this.cachedCategories){
-      return this.cachedCategories;
+  categories = async (): Promise<IEventCategoryDef[]> => {
+    if (localStorage.getItem('categories')) {
+      return JSON.parse(localStorage.getItem('categories'));
     }
-    this.cachedCategories = await (await fetch('http://localhost:8097/api/event/categories', this.generateTokenHeader())).json();
-    return this.cachedCategories;
+    const c = await (await fetch('http://localhost:8097/api/event/categories', this.generateTokenHeader())).json();
+    localStorage.setItem('categories', JSON.stringify(c));
+    return c;
   }
 
 }

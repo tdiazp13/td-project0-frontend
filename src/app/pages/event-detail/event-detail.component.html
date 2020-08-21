@@ -22,18 +22,31 @@
                 </label>
                 <label>
                     <span>Initial Date:</span>
-                    <input type="datetime-local" 
-                        [ngModel]="currentEvent.event_initial_date | date:'yyyy-MM-ddTHH:mm'"
-                        (ngModelChange)="currentEvent.event_initial_date = $event"
-                        name="event_initial_date" #ctrl="ngModel" required>
+                    <div class="group">
+                        <input type="date" 
+                            [ngModel]="currentEvent.event_initial_date"
+                            (ngModelChange)="currentEvent.event_initial_date = $event"
+                            name="event_initial_date" #ctrl="ngModel" required>
+                        <input type="time" 
+                            [ngModel]="currentEvent.event_initial_time"
+                            (ngModelChange)="currentEvent.event_initial_time = $event"
+                            name="event_initial_time" #ctrl="ngModel" required>    
+                    </div>
                 </label>
                 <label>
                     <span>Final Date:</span>
-                    <input type="datetime-local" 
-                        [ngModel]="currentEvent.event_final_date | date:'yyyy-MM-ddTHH:mm'"
-                        (ngModelChange)="currentEvent.event_final_date = $event"
-                        [min]="currentEvent.event_initial_date"
-                        name="event_final_date" #ctrl="ngModel" required>
+                    <div class="group">
+                        <input type="date" 
+                            [ngModel]="currentEvent.event_final_date"
+                            (ngModelChange)="currentEvent.event_final_date = $event"
+                            [min]="currentEvent.event_initial_date"
+                            name="event_final_date" #ctrl="ngModel" required>
+                        <input type="time"
+                            [ngModel]="currentEvent.event_final_time"
+                            (ngModelChange)="currentEvent.event_final_time = $event"
+                            [min]="currentEvent.event_initial_time"
+                            name="event_final_time" #ctrl="ngModel" required>
+                    </div>
                 </label>
                 <label>
                     <span>Type:</span>
@@ -49,4 +62,5 @@
         </form>
     </div>
 </div>
+<app-c-loader *ngIf="loading"></app-c-loader>
 <app-error-modal *ngIf="showModal" (closeEvent)="showModal=false"></app-error-modal>

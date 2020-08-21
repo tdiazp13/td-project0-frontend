@@ -20,19 +20,20 @@ export class EventNewComponent implements OnInit {
   eventPlace: string;
   eventAddress: string;
   eventInitialDate: string;
+  eventInitialTime: string;
   eventFinalDate: string;
+  eventFinalTime: string;
   eventType: number;
 
   showModal: boolean;
+  loading = false;
 
   constructor(private events: EventService, private router: Router) { }
 
   async ngOnInit(): Promise<void> {
     try {
-      const [types, categories] = await Promise.all([
-        this.events.types(),
-        this.events.categories()
-      ]);
+      const types = await this.events.types();
+      const categories = await this.events.categories();
       this.types = types;
       this.categories = categories;
     } catch (error) {
@@ -42,10 +43,18 @@ export class EventNewComponent implements OnInit {
 
   onSubmit = async (form: NgForm): Promise<void> => {
     try {
-      const e = await this.events.create(form.value);
-      await this.router.navigate(['/event', e.id]);
+      this.loading = true;
+      const f = form.value;
+      f.event_final_date = `${f.event_final_date}T${f.event_final_time}`;
+      f.event_initial_date = `${f.event_initial_date}T${f.event_initial_time}`;
+      delete f.event_final_time;
+      delete f.event_initial_time;
+      await this.events.create(form.value);
+      await this.router.navigate(['/dashboard']);
     } catch (error) {
       this.showModal = true;
+    } finally {
+      this.loading = false;
     }
   }
 

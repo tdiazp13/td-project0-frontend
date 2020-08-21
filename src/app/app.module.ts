@@ -13,6 +13,7 @@ import { EventDetailComponent } from './pages/event-detail/event-detail.componen
 import { EventNewComponent } from './pages/event-new/event-new.component';
 import { ErrorModalComponent } from './components/error-modal/error-modal.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { CLoaderComponent } from './components/c-loader/c-loader.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
     EventDetailComponent,
     EventNewComponent,
     ErrorModalComponent,
+    CLoaderComponent,
   ],
   imports: [
     HttpClientModule,

@@ -26,6 +26,9 @@ $font-color: #2A293E;
                 size: $font-size;
                 margin: 8px 0;
                 width: 100%;
+                .group {
+                    display: flex;
+                }
                 input,
                 select {
                     width: 100%;
