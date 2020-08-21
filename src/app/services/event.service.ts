@@ -12,10 +12,10 @@ export class EventService {
   private generateTokenHeader = () => ({ headers: { Authorization: `Token ${this.auth.token}` } });
 
   getAll = async (): Promise<IEventDef[]> =>
-    (await fetch('http://localhost:8097/api/events/', this.generateTokenHeader())).json();
+    (await fetch('http://localhost:8097/api/events/', this.generateTokenHeader())).json()
 
   getById = async (uuid: string): Promise<IEventDef> =>
-    (await fetch(`http://localhost:8097/api/events/${uuid}`, this.generateTokenHeader())).json();
+    (await fetch(`http://localhost:8097/api/events/${uuid}`, this.generateTokenHeader())).json()
 
   create = async (event: IEventDef): Promise<IEventDef> =>
     (await fetch('http://localhost:8097/api/events/',
@@ -23,7 +23,7 @@ export class EventService {
         method: 'post',
         body: new URLSearchParams(JSON.parse(JSON.stringify(event))),
         ...this.generateTokenHeader()
-      })).json();
+      })).json()
 
   update = async (event: IEventDef): Promise<void> =>
     (await fetch(`http://localhost:8097/api/events/${event.id}`,
@@ -31,10 +31,10 @@ export class EventService {
         method: 'put',
         body: new URLSearchParams(JSON.parse(JSON.stringify(event))),
         ...this.generateTokenHeader()
-      })).json();
+      })).json()
 
   erase = async (uuid: string): Promise<void> =>
-    (await fetch(`http://localhost:8097/api/events/${uuid}`, { method: 'delete', ...this.generateTokenHeader() })).json();
+    (await fetch(`http://localhost:8097/api/events/${uuid}`, { method: 'delete', ...this.generateTokenHeader() })).json()
 
   types = async (): Promise<IEventTypeDef[]> => {
     if (localStorage.getItem('types')) {
