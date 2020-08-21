@@ -23,7 +23,7 @@ export class AuthService {
   };
 
   signup = async (signupInfo: ISignupFormInfo): Promise<IUserDef> => {
-    const f = await fetch('http://172.24.98.88:8097/api/create-user', {
+    const f = await fetch('http://172.24.98.88:8080/api/create-user', {
       method: 'post',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -38,7 +38,7 @@ export class AuthService {
   };
 
   login = async (loginInfo: ILoginFormInfo): Promise<{ token: string }> => {
-    const f = await fetch('http://172.24.98.88:8097/api/api-auth', {
+    const f = await fetch('http://172.24.98.88:8080/api/api-auth', {
       method: 'post',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
