@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One&display=swap');
+$form-bg: #f8f4e5;
+$form-shadow: #ffa580;
+$form-primary-highlight: #95a4ff;
+$form-secondary-highlight: #ffc8ff;
+$font-size: 14pt;
+$font-face: 'Fjalla One';
+$font-color: #2A293E;
+.bg {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(white, #718f91);
+    .card {
+        padding: 40px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 8px 0px 8px 0px #929292;
+        overflow: scroll;
+        main {
+            display: flex;
+            flex-direction: column;
+            label {
+                font-family: $font-face;
+                size: $font-size;
+                margin: 8px 0;
+                width: 100%;
+                input,
+                select {
+                    width: 100%;
+                }
+            }
+            .actions {
+                display: flex;
+                justify-content: space-evenly;
+                margin-top: 18px;
+            }
+        }
+    }
+}

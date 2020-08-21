@@ -1,0 +1,51 @@
+<div class="bg">
+    <div class="card">
+        <form #newForm="ngForm" (submit)="onSubmit(newForm)">
+            <main>
+                <label>
+                  <span>Name:</span>
+                  <input type="text" [(ngModel)]="eventName" name="event_name" required>
+              </label>
+                <label>
+                  <span>Category:</span>
+                  <select [(ngModel)]="eventCategory" required name="event_category">
+                      <option *ngFor="let c of categories" [ngValue]="c.id">{{c.description}}</option>
+                    </select>
+              </label>
+                <label>
+                  <span>Place:</span>
+                  <input type="text" [(ngModel)]="eventPlace" name="event_place" required>
+              </label>
+                <label>
+                  <span>Address:</span>
+                  <input type="text" [(ngModel)]="eventAddress" name="event_address" required>
+              </label>
+                <label>
+                <span>Initial Date:</span>
+                <input type="datetime-local" 
+                    [ngModel]="eventInitialDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="eventInitialDate = $event; eventFinalDate=''"
+                    name="event_initial_date" required>
+              </label>
+                <label>
+                <span>Final Date:</span>
+                <input type="datetime-local" 
+                    [ngModel]="eventFinalDate | date:'yyyy-MM-ddTHH:mm'"
+                    (ngModelChange)="eventFinalDate = $event"
+                    [min]="eventInitialDate"
+                    name="event_final_date" required>
+              </label>
+                <label>
+                  <span>Type:</span>
+                  <select [(ngModel)]="eventType" required name="event_type">
+                      <option *ngFor="let t of types" [ngValue]="t.id">{{t.description}}</option>
+                    </select>
+              </label>
+                <div class="actions">
+                    <button type="submit" [disabled]="!(newForm.form.valid)">Create</button>
+                </div>
+            </main>
+        </form>
+    </div>
+</div>
+<app-error-modal *ngIf="showModal" (closeEvent)="showModal=false"></app-error-modal>

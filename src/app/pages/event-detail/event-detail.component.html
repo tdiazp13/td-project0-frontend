@@ -1,0 +1,52 @@
+<div class="bg">
+    <div class="card" *ngIf="currentEvent">
+        <form #editForm="ngForm" (submit)="onSubmit(editForm)">
+            <main>
+                <label>
+                    <span>Name:</span>
+                    <input type="text" [(ngModel)]="currentEvent.event_name" name="event_name" #ctrl="ngModel" required>
+                </label>
+                <label>
+                    <span>Category:</span>
+                    <select [(ngModel)]="currentEvent.event_category" required name="event_category" #ctrl="ngModel">
+                        <option *ngFor="let c of categories" [ngValue]="c.id">{{c.description}}</option>
+                      </select>
+                </label>
+                <label>
+                    <span>Place:</span>
+                    <input type="text" [(ngModel)]="currentEvent.event_place" name="event_place" #ctrl="ngModel" required>
+                </label>
+                <label>
+                    <span>Address:</span>
+                    <input type="text" [(ngModel)]="currentEvent.event_address" name="event_address" #ctrl="ngModel" required>
+                </label>
+                <label>
+                    <span>Initial Date:</span>
+                    <input type="datetime-local" 
+                        [ngModel]="currentEvent.event_initial_date | date:'yyyy-MM-ddTHH:mm'"
+                        (ngModelChange)="currentEvent.event_initial_date = $event"
+                        name="event_initial_date" #ctrl="ngModel" required>
+                </label>
+                <label>
+                    <span>Final Date:</span>
+                    <input type="datetime-local" 
+                        [ngModel]="currentEvent.event_final_date | date:'yyyy-MM-ddTHH:mm'"
+                        (ngModelChange)="currentEvent.event_final_date = $event"
+                        [min]="currentEvent.event_initial_date"
+                        name="event_final_date" #ctrl="ngModel" required>
+                </label>
+                <label>
+                    <span>Type:</span>
+                    <select [(ngModel)]="currentEvent.event_type" required name="event_type" #ctrl="ngModel">
+                        <option *ngFor="let t of types" [ngValue]="t.id">{{t.description}}</option>
+                      </select>
+                </label>
+                <div class="actions">
+                    <button type="submit" [disabled]="!(editForm.form.valid)">Update</button>
+                    <button type="button" (click)="erase(currentEvent.id)"> Erase</button>
+                </div>
+            </main>
+        </form>
+    </div>
+</div>
+<app-error-modal *ngIf="showModal" (closeEvent)="showModal=false"></app-error-modal>

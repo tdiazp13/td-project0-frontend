@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="login-card">
+        <h2><span>Login</span></h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <input type="text" placeholder="Email" formControlName="email" autocomplete="email" required>
+            <input type="password" placeholder="Password" formControlName="password" autocomplete="current-password" required>
+            <span><a routerLink="/signup" routerLinkActive="active">Sign Up</a></span>
+            <button type="submit" [disabled]="!loginForm.valid">Login</button>
+        </form>
+    </div>
+</div>
+<app-error-modal *ngIf="showModal" (closeEvent)="showModal=false"></app-error-modal>

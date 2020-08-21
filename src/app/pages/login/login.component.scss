@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One&display=swap');
+$form-bg: #f8f4e5;
+$form-shadow: #ffa580;
+$form-primary-highlight: #95a4ff;
+$form-secondary-highlight: #ffc8ff;
+$font-size: 14pt;
+$font-face: 'Fjalla One';
+$font-color: #2A293E;
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(white, #718f91);
+    .login-card {
+        form {
+            text-align: right;
+        }
+        h2 {
+            text-align: center;
+            font-family: $font-face;
+            margin: 1.5em 0;
+            span {
+                margin: 0 1em;
+            }
+        }
+        input {
+            display: block;
+            width: 100%;
+            font-size: $font-size;
+            line-height: $font-size * 3;
+            font-family: $font-face;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            min-width: 250px;
+            padding: 0 12px;
+            outline: none;
+            color: black;
+            &::placeholder {
+                opacity: 0.2;
+            }
+            &:not(:last-of-type) {
+                margin-bottom: $font-size;
+            }
+        }
+        span {
+            margin-top: 8px;
+            margin-bottom: 32px;
+            display: inline-block;
+            font-family: $font-face;
+        }
+        button[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            line-height: $font-size * 2;
+            padding: 0 32px;
+            background: #84a3a4;
+            letter-spacing: 2px;
+            transition: .2s all ease-in-out;
+            outline: none;
+            color: white;
+            border-radius: 8px;
+            text-transform: uppercase;
+            border: solid 2px #01807a;
+            &:not(:disabled) {
+                cursor: pointer;
+                &:hover {
+                    background: #01807a;
+                }
+            }
+            &:disabled {
+                opacity: 0.3;
+            }
+        }
+    }
+}

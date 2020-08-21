@@ -1,0 +1,41 @@
+<div class="bg">
+    <div class="card">
+        <header>
+            <h2>
+                Events
+            </h2>
+            <div class="buttons">
+                <button type="button" (click)="goToNew()">New</button>
+                <button type="button" (click)="logout()">Logout</button>
+            </div>
+        </header>
+        <main>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Place</th>
+                    <th>Address</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Type</th>
+                    <th>Actions</th>
+                </tr>
+                <tr *ngFor="let event of showingEvents">
+                    <td>{{event.event_name}}</td>
+                    <td>{{event.event_category}}</td>
+                    <td>{{event.event_place}}</td>
+                    <td>{{event.event_address}}</td>
+                    <td>{{event.event_initial_date | date}}</td>
+                    <td>{{event.event_final_date | date}}</td>
+                    <td>{{event.event_type}}</td>
+                    <td>
+                        <button type="button" (click)="goTo(event.id)">Ver</button>
+                        <button type="button" (click)="removeEvent(event.id)">Borrar</button>
+                    </td>
+                </tr>
+            </table>
+        </main>
+    </div>
+</div>
+<app-error-modal *ngIf="showModal" (closeEvent)="showModal=false"></app-error-modal>

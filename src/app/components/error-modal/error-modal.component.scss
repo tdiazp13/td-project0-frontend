@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One&display=swap');
+$font-size: 14pt;
+$font-face: 'Fjalla One';
+$font-color: #2A293E;
+.fs {
+    position: absolute;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    .card {
+        position: relative;
+        text-align: center;
+        background-color: white;
+        border-radius: 6px;
+        padding: 2em 3em;
+        font-size: $font-size;
+        font-family: $font-face;
+        .abs {
+            position: absolute;
+            top: 8px;
+            right: 16px;
+            cursor: pointer;
+        }
+        h2 {
+            margin-bottom: 2em;
+        }
+    }
+}
