@@ -7,18 +7,20 @@ import { AuthService } from './auth.service';
 })
 export class EventService {
 
+  hostname = window.location.hostname;
+
   constructor(private auth: AuthService) { }
 
   private generateTokenHeader = () => ({ headers: { Authorization: `Token ${this.auth.token}` } });
 
   getAll = async (): Promise<IEventDef[]> =>
-    (await fetch('http://172.24.98.88:8080/api/events/', this.generateTokenHeader())).json()
+    (await fetch(`http://${this.hostname}:8080/api/events/`, this.generateTokenHeader())).json()
 
   getById = async (uuid: string): Promise<IEventDef> =>
-    (await fetch(`http://172.24.98.88:8080/api/events/${uuid}`, this.generateTokenHeader())).json()
+    (await fetch(`http://${this.hostname}:8080/api/events/${uuid}`, this.generateTokenHeader())).json()
 
   create = async (event: IEventDef): Promise<IEventDef> =>
-    (await fetch('http://172.24.98.88:8080/api/events/',
+    (await fetch(`http://${this.hostname}:8080/api/events/`,
       {
         method: 'post',
         body: new URLSearchParams(JSON.parse(JSON.stringify(event))),
@@ -26,7 +28,7 @@ export class EventService {
       })).json()
 
   update = async (event: IEventDef): Promise<void> =>
-    (await fetch(`http://172.24.98.88:8080/api/events/${event.id}`,
+    (await fetch(`http://${this.hostname}:8080/api/events/${event.id}`,
       {
         method: 'put',
         body: new URLSearchParams(JSON.parse(JSON.stringify(event))),
@@ -34,13 +36,13 @@ export class EventService {
       })).json()
 
   erase = async (uuid: string): Promise<void> =>
-    (await fetch(`http://172.24.98.88:8080/api/events/${uuid}`, { method: 'delete', ...this.generateTokenHeader() })).json()
+    (await fetch(`http://${this.hostname}:8080/api/events/${uuid}`, { method: 'delete', ...this.generateTokenHeader() })).json()
 
   types = async (): Promise<IEventTypeDef[]> => {
     if (localStorage.getItem('types')) {
       return JSON.parse(localStorage.getItem('types'));
     }
-    const t = await (await fetch('http://172.24.98.88:8080/api/event/types', this.generateTokenHeader())).json();
+    const t = await (await fetch(`http://${this.hostname}:8080/api/event/types`, this.generateTokenHeader())).json();
     localStorage.setItem('types', JSON.stringify(t));
     return t;
   }
@@ -49,7 +51,7 @@ export class EventService {
     if (localStorage.getItem('categories')) {
       return JSON.parse(localStorage.getItem('categories'));
     }
-    const c = await (await fetch('http://172.24.98.88:8080/api/event/categories', this.generateTokenHeader())).json();
+    const c = await (await fetch(`http://${this.hostname}:8080/api/event/categories`, this.generateTokenHeader())).json();
     localStorage.setItem('categories', JSON.stringify(c));
     return c;
   }

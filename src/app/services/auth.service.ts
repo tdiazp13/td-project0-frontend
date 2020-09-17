@@ -8,6 +8,8 @@ import { IUserDef } from '../models/user.model';
 })
 export class AuthService {
 
+  hostname = window.location.hostname;
+
   constructor() { }
 
   get token(): string {
@@ -20,17 +22,17 @@ export class AuthService {
 
   logout = (): void => {
     localStorage.removeItem('user');
-  };
+  }
 
   signup = async (signupInfo: ISignupFormInfo): Promise<IUserDef> => {
-    const f = await fetch('http://172.24.98.88:8080/api/create-user', {
+    const f = await fetch(  `http://${this.hostname}:8080/api/create-user`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: (new URLSearchParams({...signupInfo})).toString()
     });
-    if(f.ok){
+    if (f.ok) {
       return f.json();
     }else{
       return Promise.reject(await f.json());
@@ -38,7 +40,7 @@ export class AuthService {
   };
 
   login = async (loginInfo: ILoginFormInfo): Promise<{ token: string }> => {
-    const f = await fetch('http://172.24.98.88:8080/api/api-auth', {
+    const f = await fetch(`http://${this.hostname}:8080/api/api-auth`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
